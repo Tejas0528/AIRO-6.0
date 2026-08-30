@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "/api" });
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || "/api",
+});
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("airo6_admin_token");
@@ -8,7 +10,10 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export function extractErrorMessage(err, fallback = "Something went wrong. Please try again.") {
+export function extractErrorMessage(
+  err,
+  fallback = "Something went wrong. Please try again."
+) {
   return err?.response?.data?.message || fallback;
 }
 
